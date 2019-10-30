@@ -1,33 +1,59 @@
-import mysql from 'mysql';
-require('dotenv').config();
+import pool from './config';
+import faker from 'faker';
+import moment from 'moment';
 
-const pool = mysql.createPool({
-  connectionLimit: 10,
-  host:process.env.DB_HOST,
-  user: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: 'books'
-});
+const createTableQuery = `
+  CREATE TABLE IF NOT EXISTS books (
+    id CHAR(64) NOT NULL,
+    title VARCHARACTER(50) NOT NULL,
+    date DATE,
+    author VARCHARACTER(50) NOT NULL,
+    descripion VARCHARACTER(300) NOT NULL,
+    image VARCHARACTER(50)	 
+)`;
+
+const insertBook = (obj) => {
+  return `INSERT INTO books VALUES( 
+    '${obj.id}', '${obj.title}', '${obj.date}',
+    '${obj.author}', '${obj.description}', '${obj.image}'  
+  )`
+}
 
 async function createTable() {
-  pool.config.connectionConfig.database = 'books';
-  await pool.query('CREATE TABLE IF NOT EXISTS pet ( name VARCHAR(20), owner VARCHAR(20) )', (err) => {
-    if (err) throw new Error(err);
-    console.log('Table created')
-  });
+  try {
+    await pool.query(createTableQuery);
+    console.log('Table created');
+  } catch(e) {
+    throw new Error(err);
+  }
 } 
 
-async function addBook(){ 
-  await pool.query('insert into books (name, owner) values("name", "owner")');
+async function addBook(obj){ 
+  try {
+    console.log(insertBook(obj))
+    await pool.query(insertBook(obj));
+  } catch (error) {
+    console.log(error)
+  }
 };
 
-const forLoop = async _ => {
+const fakeDate = date => moment(date).format('YYYY-MM-DD');
+
+const seed = async () => {
   createTable();
-  for (let index = 0; index < 5; index++) {
-    await addBook()
+  for (let i = 0; i < 5; i++) {
+    const obj = {
+      id: faker.random.uuid(),
+      title: faker.random.words(2),
+      date: fakeDate(faker.date.past()),
+      author: faker.random.words(2),
+      description: faker.random.words(4),
+      image: faker.image.abstract()
+    }
+    await addBook(obj);
   }
 }
-forLoop();
+seed();
 
 setTimeout((function() {
   return process.exit(0);
