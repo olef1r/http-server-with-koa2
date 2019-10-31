@@ -17,7 +17,6 @@ export function createSorting(sortSorting) {
 export function createCondition(filters) {
   let str = '';
   if (filters === {}) return '';
-  console.log("LEW", filters.length)
   Object.keys(filters).map((key, i) => {
     console.log(key,"#@$",  i)
     str += `${key} = '${filters[key]}' AND `
