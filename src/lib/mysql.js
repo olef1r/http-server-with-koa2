@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash';
+
 export function createSorting(sortSorting) {
   if (sortSorting === '' || '-') return [];
   const arr = sortSorting.split(',');
@@ -16,7 +18,7 @@ export function createSorting(sortSorting) {
 
 export function createCondition(filters) {
   let str = '';
-  if (filters === {}) return '';
+  if (isEmpty(filters)) return '';
   Object.keys(filters).map((key, i) => {
     console.log(key,"#@$",  i)
     str += `${key} = '${filters[key]}' AND `

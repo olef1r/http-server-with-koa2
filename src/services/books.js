@@ -1,10 +1,10 @@
 import  { query } from './config';
 import { insertBook, updateBook, getBookById, getBooks } from '../cosnstants/queries';
 
-async function getAll(sort, filters) {
+async function getAll(sort, filters, page, pageSize) {
   try {
-    const b =  await query(getBooks(sort, filters));
-    //console.log(b)
+    const b =  await query(getBooks(sort, filters, page, pageSize));
+    console.log("$%$#", b)
     return b
   } catch (error) {
     throw error;

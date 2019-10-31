@@ -15,10 +15,11 @@ const schema = Joi.object().keys({
 
 export async function getAllBooks(ctx) {
   try {
-    const { sort } = ctx.query;
+    let { sort, page, pageSize } = ctx.query;
+    console.log(sort, page, pageSize)
     const filters = pick(ctx.query, ALLOWED_FILEDS_TO_FILTERS);
-    const res = await booksService.getAll(sort, filters);
-    //console.log("#$#$%",res)
+    console.log(filters)
+    const res = await booksService.getAll(sort, filters, page, pageSize);
     ctx.body = res;
   } catch (error) {
     ctx.status = 400;

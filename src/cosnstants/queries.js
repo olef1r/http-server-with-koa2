@@ -24,12 +24,14 @@ export const updateBook = (id, body) => {
 
 export const getBookById = id => `SELECT id FROM books WHERE id='${id}'`;
 
-export const getBooks = ( sort, filters = '') => {
-  createCondition(filters)
+export const getBooks = ( sort, filters, page = 1, pageSize = 10) => {
+  const offset = pageSize * (page - 1);
   return `
     SELECT * FROM books
     ${createCondition(filters)}
     ${sort ? createSorting(sort) : '' }
+    LIMIT ${pageSize}
+    OFFSET ${offset}
  
  `
 };
