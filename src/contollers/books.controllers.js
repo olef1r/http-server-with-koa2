@@ -14,8 +14,9 @@ const schema = Joi.object().keys({
 
 export async function getAllBooks(ctx) {
   try {
-    const res = await booksService.getAll()
-    console.log(res)
+    console.log(ctx.query)
+    const res = await booksService.getAll(ctx.query)
+    console.log("#$#$%",res)
     ctx.body = res;
   } catch (error) {
     ctx.status = 400;

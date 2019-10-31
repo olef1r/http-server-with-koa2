@@ -1,11 +1,9 @@
 import  { query } from './config';
 import { insertBook, updateBook, getBookById, getBooks } from '../cosnstants/queries';
 
-async function getAll() {
+async function getAll(obj) {
   try {
-    const books =  await query(getBooks());
-    console.log("@#!@#", books);
-    return books;
+    return await query(getBooks(obj));
   } catch (error) {
     throw error;
   } 
