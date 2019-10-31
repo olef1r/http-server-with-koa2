@@ -1,19 +1,14 @@
 import Router from 'koa-router';
-import { createBook, updateBook } from '../contollers/books.controllers';
+import { createBook, updateBook, getAllBooks } from '../contollers/books.controllers';
 
 const router = new Router();
 
-router.get('/', (ctx, next) => {
-//  ctx.body = 'Hello World!';
-//  createBook(ctx)
-//  ctx.body = {
-//   status: 'success',
-//   data: 's'
-//   };
+router.get('/', async ctx => {
+  await getAllBooks(ctx);
 });
 
-router.post('/', ctx => {
-  createBook(ctx);
+router.post('/', async ctx => {
+  await createBook(ctx);
 });
 
 router.patch('/:id', async ctx => {

@@ -12,18 +12,28 @@ const schema = Joi.object().keys({
   date: Joi.date().required(),
 })
 
+export async function getAllBooks(ctx) {
+  try {
+    const res = await booksService.getAll()
+    console.log(res)
+    ctx.body = res;
+  } catch (error) {
+    ctx.status = 400;
+    ctx.body = error;
+  };
+};
 
 export async function createBook(ctx) {
   try {
     let { body } = ctx.request;
     const result = await Joi.validate(body, schema);
-    booksService.insert(result);
+    await booksService.insert(result);
     ctx.body = 'Succsess';
   } catch (error) {
     ctx.status = 400;
     ctx.body = error;
-  }
-}
+  };
+};
 
 export async function updateBook(ctx) {
   try {
@@ -35,9 +45,9 @@ export async function updateBook(ctx) {
       ctx.body = `${result.message} for id ${id}`;
     } else {
       ctx.body = `There is any book with id = ${id}`;
-    }
+    };
   } catch (error) {
     ctx.status = 400
     ctx.throw(error)
-  }
-}
+  };
+};

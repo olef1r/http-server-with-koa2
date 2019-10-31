@@ -22,3 +22,5 @@ export const updateBook = (id, body) => {
 };
 
 export const getBookById = id => `SELECT id FROM books WHERE id='${id}'`;
+
+export const getBooks = () => `SELECT * FROM books`;

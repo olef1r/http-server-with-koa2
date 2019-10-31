@@ -1,22 +1,22 @@
-// import pool from './config';
-import { insertBook, updateBook, getBookById } from '../cosnstants/queries';
-var query = require('./config').query;
+import  { query } from './config';
+import { insertBook, updateBook, getBookById, getBooks } from '../cosnstants/queries';
 
-
-async function get() {
-  const res = pool.query('SELECT * FROM books', function (err, result, fields) {
-    if (err) throw new Error(err)
-    // Do something with result.
-   
-    return result
-  })
-  console.log(res)
+async function getAll() {
+  try {
+    const books =  await query(getBooks());
+    console.log("@#!@#", books);
+    return books;
+  } catch (error) {
+    throw error;
+  } 
 } 
 
 async function insert(obj) {
-  await pool.query(insertBook(obj), err => {
-    if (err) throw Error(err); 
-  });
+  try {
+    await query(insertBook(obj));
+  } catch (error) {
+    throw error;
+  }
 };
 
 async function update(id, obj) {
@@ -27,10 +27,9 @@ async function update(id, obj) {
   } 
 };
 
-
 async function getById(id) {
   try {
-    const book =  await query(getBookById(id), [id]);
+    const book = await query(getBookById(id));
     if (book[0]) return true;
     return false;
   } catch (error) {
@@ -39,4 +38,4 @@ async function getById(id) {
 };
 
 
-export default { get, insert, update, getById }
+export default { getAll, insert, update, getById }
