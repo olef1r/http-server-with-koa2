@@ -15,10 +15,8 @@ const schema = Joi.object().keys({
 
 export async function getAllBooks(ctx) {
   try {
-    let { sort, page, pageSize } = ctx.query;
-    console.log(sort, page, pageSize)
+    const { sort, page, pageSize } = ctx.query;
     const filters = pick(ctx.query, ALLOWED_FILEDS_TO_FILTERS);
-    console.log(filters)
     const res = await booksService.getAll(sort, filters, page, pageSize);
     ctx.body = res;
   } catch (error) {
@@ -43,7 +41,7 @@ export async function updateBook(ctx) {
   try {
     const { id } = ctx.params;
     const data = pick(ctx.request.body, ALLOWED_FILEDS_TO_UPDATE);
-    const isExist = await booksService.getById(id)
+    const isExist = await booksService.getById(id);
     if (isExist) {
       const result = await booksService.update(id, data);
       ctx.body = `${result.message} for id ${id}`;

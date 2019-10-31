@@ -3,9 +3,7 @@ import { insertBook, updateBook, getBookById, getBooks } from '../cosnstants/que
 
 async function getAll(sort, filters, page, pageSize) {
   try {
-    const b =  await query(getBooks(sort, filters, page, pageSize));
-    console.log("$%$#", b)
-    return b
+    return await query(getBooks(sort, filters, page, pageSize));
   } catch (error) {
     throw error;
   } 

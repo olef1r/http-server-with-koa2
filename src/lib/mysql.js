@@ -20,7 +20,6 @@ export function createCondition(filters) {
   let str = '';
   if (isEmpty(filters)) return '';
   Object.keys(filters).map((key, i) => {
-    console.log(key,"#@$",  i)
     str += `${key} = '${filters[key]}' AND `
   }); 
   str = str.slice(0, -4);

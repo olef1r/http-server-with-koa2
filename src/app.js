@@ -1,6 +1,7 @@
 import Koa from 'koa';
-import router from './routes';
 import bodyParser from 'koa-body';
+import router from './routes';
+
 const app = new Koa();
 
 app.use(bodyParser());

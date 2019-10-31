@@ -31,9 +31,7 @@ export const getBooks = ( sort, filters, page = 1, pageSize = 10) => {
     ${createCondition(filters)}
     ${sort ? createSorting(sort) : '' }
     LIMIT ${pageSize}
-    OFFSET ${offset}
- 
- `
+    OFFSET ${offset}`
 };
 
 
