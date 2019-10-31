@@ -3,6 +3,7 @@ import { pick } from 'lodash';
 import booksService from '../services/books';
 
 const ALLOWED_FILEDS_TO_UPDATE = ['title', 'author', 'description', 'image', 'date'];
+const ALLOWED_FILEDS_TO_FILTERS = [...ALLOWED_FILEDS_TO_UPDATE, 'id'];
 
 const schema = Joi.object().keys({
   title: Joi.string().required(),
@@ -14,9 +15,10 @@ const schema = Joi.object().keys({
 
 export async function getAllBooks(ctx) {
   try {
-    console.log(ctx.query)
-    const res = await booksService.getAll(ctx.query)
-    console.log("#$#$%",res)
+    const { sort } = ctx.query;
+    const filters = pick(ctx.query, ALLOWED_FILEDS_TO_FILTERS);
+    const res = await booksService.getAll(sort, filters);
+    //console.log("#$#$%",res)
     ctx.body = res;
   } catch (error) {
     ctx.status = 400;
