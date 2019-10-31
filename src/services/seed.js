@@ -1,4 +1,5 @@
 import pool from './config';
+import { insert } from '../cosnstants/query';
 import faker from 'faker';
 import moment from 'moment';
 
@@ -12,13 +13,6 @@ const createTableQuery = `
     image VARCHARACTER(50)	 
 )`;
 
-const insertBook = (obj) => {
-  return `INSERT INTO books VALUES( 
-    '${obj.id}', '${obj.title}', '${obj.date}',
-    '${obj.author}', '${obj.description}', '${obj.image}'  
-  )`
-}
-
 async function createTable() {
   try {
     await pool.query(createTableQuery);
@@ -30,8 +24,8 @@ async function createTable() {
 
 async function addBook(obj){ 
   try {
-    console.log(insertBook(obj))
-    await pool.query(insertBook(obj));
+    console.log(insert(obj))
+    await pool.query(insert(obj));
   } catch (error) {
     console.log(error)
   }
